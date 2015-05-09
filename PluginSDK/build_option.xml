@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+	文件名： build_option.xml
+	描述：
+		项目构建的参数设置，所有路径等变化的属性都在这里进行设置，
+		如项目路径、工具路径等。
+-->
+
+<project name="option" default="" basedir=".">	
+	<!-- ===================================项目属性，请根据对应的描述进行更新 ======================================-->
+    <!-- 编译使用的Android SDK版本设置，这里的10是指使用2.3.3版本的SDK-->
+    <property name="android_version" value="21"/>
+    <!-- 编译使用的build tools版本 -->
+    <property name="build_tools_version" value="22.0.1"/>
+    <!--Android SDK路径 -->
+    <property name="android_home" value="D:/ADT/sdk" />
+	<!-- 文件编码设置 -->
+	<property name="encoding" value="UTF-8"/>
+    <!-- 工程名称 -->
+    <property name="file_name" value="pluginsdk"/>
+    <!-- jar版本号 -->
+    <property name="jar_version" value="0.1"/>
+    <!-- ===================================项目属性，请根据对应的描述进行更新 ======================================-->
+    <!--本地工作区路径，默认使用当前目录 -->
+    <property name="project_path" value="${basedir}"/>  
+    <!-- jar包名称,工程名称+版本号:如tencentmap_platform0.1.jar-->
+    <property name="jar_name" value="${file_name}${jar_version}"/>
+</project>

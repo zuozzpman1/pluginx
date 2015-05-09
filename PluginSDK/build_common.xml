@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+    文件名： build_common.xml
+    描述：
+         实际构建过程的定义。
+         编译过程描述：项目工程下的所有文件拷贝到temp目录下，这样做是为了过滤SVN的版本控制文件，然后基于temp目录进行编译等操作。
+-->
+
+<project name="build_common" default="" basedir=".">
+
+    <!-- 项目的目录属性定义 -->    
+    <property name="temp" value="${project_path}/temp"/>        <!-- 临时目录，用于运行时的源代码、中间结果存放 -->
+    <property name="src" value="${temp}/src"/>            <!-- 运行时源代码目录 -->
+    <property name="lib" value="${temp}/libs"/>            <!-- 运行时库目录 -->
+    <property name="bin" value="${temp}/bin"/>        <!-- 编译输出结果目录 -->
+    <property name="classes" value="${temp}/classes"/>        <!-- 运行时classes输出目录 -->
+    
+    <!-- Android相关属性定义 -->
+    <property name="android_build_tools" value="${android_home}/build-tools/${build_tools_version}"/>
+    <property name="android_platform_tools" value="${android_home}/platform-tools"/>
+    <property name="android_framework" value="${android_home}/platforms/android-${android_version}/framework.aidl"/>    
+    <property name="aapt" value="${android_build_tools}/aapt"/>
+    <property name="aidl" value="${android_build_tools}/aidl"/>
+    <property name="adb" value="${android_build_tools}/adb"/>
+    <property name="dx" value="${android_build_tools}/dx.bat"/>
+    <property name="apkbuilder" value="${android_home}/tools/apkbuilder"/>
+    <property name="zipalign" value="${android_home}/tools/zipalign"/>
+    <property name="androidjar" value="${android_home}/platforms/android-${android_version}/android.jar"/> 
+    <property name="android_tools" value="${android_home}/tools"/>
+    
+    <!-- ###### Target定义部分 ###### -->
+    <target name="clean">
+        <echo>Start clean...</echo>
+        <delete dir="${temp}" />
+        <echo>Finished clean...</echo>
+    </target>
+    
+    <target name="init">
+        <echo>Start init...</echo>
+        <echo>If not exist, then create the directories...</echo>
+        <mkdir dir="${bin}" />
+        <mkdir dir="${temp}" />
+        <mkdir dir="${classes}" />
+        <mkdir dir="${lib}" />
+        <echo>Copy files to temp directory...</echo>
+        <copy todir="temp" filtering="true">
+            <fileset dir="${project_path}">
+                <exclude name="**/.svn/*"/>
+                <exclude name="temp/"/>
+                <exclude name="bin/"/>
+                <exclude name="gen/"/>
+                <exclude name="assets/"/>
+                <exclude name="res/"/>
+            </fileset>
+        </copy>
+        <echo>Finish init...</echo>
+    </target>
+
+    <!-- 编译项目的.java文件 -->
+    <target name="compile">
+        <echo>Start compile source code...</echo>
+        <echo>The debug param is default to true, for the exception upload feature required it...</echo>
+        <javac encoding="${encoding}" 
+            debug="true" 
+            extdirs="" 
+            target="1.5" 
+            destdir="${classes}" 
+            bootclasspath="${androidjar}"
+            includeAntRuntime="false" >
+            <src path="${src}"/>
+            <classpath>
+                <fileset dir="${lib}" includes="*.jar"/>
+            </classpath>
+         </javac>
+    </target>
+
+    <!-- 将class文件打包为jar -->  
+    <target name="package">
+        <echo>Packing compile results...</echo>
+        <jar basedir="${classes}" destfile="${bin}/${jar_name}.jar"/>
+        <echo>the jar path:${bin}</echo>
+        <echo>End...</echo>
+    </target>
+	
+</project>

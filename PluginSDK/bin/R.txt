@@ -1,0 +1,7 @@
+int drawable ic_launcher 0x7f020000
+int id icon 0x7f050000
+int id listView1 0x7f050002
+int id tv 0x7f050001
+int layout listitem_textview 0x7f030000
+int layout main_plugin_list 0x7f030001
+int string app_name 0x7f040000
