@@ -1,0 +1,38 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pluginx.sample"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="21" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name="com.pluginx.plugin.business.TestLaunchActivity"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- activity
+            android:name="com.tencent.map.TestActivity1"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale" /-->
+
+        <!-- plugin 宿主component定义 -->
+        <activity
+            android:name="com.tencent.map.plugin.host.HostActivity"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|fontScale"
+            android:launchMode="singleTask" />
+
+        <service android:name="com.tencent.map.plugin.host.HostService" />
+        <!-- plugin 宿主component定义结束 -->
+
+    </application>
+
+</manifest>
